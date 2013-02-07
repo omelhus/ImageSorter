@@ -54,7 +54,6 @@ def getPlace(gps) :
 			c.request("GET", url);
 			response = c.getresponse();
 			location = json.load(response);
-			##return location['geonames'][0]['toponymName']
 			city = location['postalCodes'][0]['adminName2']
 			return city
 		except Exception, e :

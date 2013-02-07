@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser(description='Move images to folders based on da
 parser.add_argument('input', help='Path to find images')
 parser.add_argument('output', help='Base path to drop images')
 parser.add_argument('-u', '--username', help="Username to use with Geonames.org", default="demo")
+parser.add_argument('-l', '--lang', help="Language for city names", default="no")
 parser.add_argument('-y', help="Continue even if Geonames fails", default=False, type=bool, nargs='?', const=True)
 
 args = parser.parse_args()
@@ -48,7 +49,7 @@ def getPlace(gps) :
 			(north, east) = location
 			c = httplib.HTTPConnection("api.geonames.org");
 			func = "findNearbyPostalCodesJSON"
-			url = "/%s?username=%s&lang=no&lat=%s&lng=%s&maxRows=1" % (func, USERNAME, north, east);
+			url = "/%s?username=%s&lang=%s&lat=%s&lng=%s&maxRows=1" % (func, USERNAME, args.lang, north, east);
 			c.request("GET", url);
 			response = c.getresponse();
 			location = json.load(response);

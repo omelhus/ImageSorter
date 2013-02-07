@@ -3,9 +3,7 @@ import Image
 from ExifTags import TAGS
 import httplib
 import simplejson as json
-from urllib import urlencode
 import time
-import datetime
 import os 
 import shutil
 import argparse

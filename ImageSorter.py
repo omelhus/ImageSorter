@@ -7,6 +7,7 @@ import time
 import os 
 import shutil
 import argparse
+import pexif
 
 parser = argparse.ArgumentParser(description='Move images to folders based on date of capture and place')
 parser.add_argument('input', help='Path to find images')
@@ -14,6 +15,7 @@ parser.add_argument('output', help='Base path to drop images')
 parser.add_argument('-u', '--username', help="Username to use with Geonames.org", default="demo")
 parser.add_argument('-l', '--lang', help="Language for city names", default="no")
 parser.add_argument('-y', help="Continue even if Geonames fails", default=False, type=bool, nargs='?', const=True)
+parser.add_argument('-s', '--synology', help="If we're running on a Synology NAS we need to update the index", default=False, type=bool, nargs='?', const=True)
 
 args = parser.parse_args()
 
@@ -89,7 +91,11 @@ for file in os.listdir(INPUTPATH) :
 			newpath = os.path.join(OUTPUTPATH, getPhotoPath(fullfile))
 			if not os.path.exists(newpath) :
 				os.makedirs(newpath)
+				if args.synology :
+					os.system("synoindex -A '%s'" % newpath)
 			shutil.move(fullfile, os.path.join(newpath, file))
+			if args.synology :
+				os.system("synoindex -a '%s'" % fullfile)
 			print "%s	=>	%s/%s" % (file, newpath, file)
 		except Exception, e :
 			print "Couldn't read EXIF from %s (%s)" % (file, e)

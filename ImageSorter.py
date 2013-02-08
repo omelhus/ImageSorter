@@ -7,7 +7,6 @@ import time
 import os 
 import shutil
 import argparse
-import pexif
 
 parser = argparse.ArgumentParser(description='Move images to folders based on date of capture and place')
 parser.add_argument('input', help='Path to find images')
@@ -85,7 +84,7 @@ if not os.path.exists(INPUTPATH) :
 	exit(1)
 
 for file in os.listdir(INPUTPATH) :
-	if '.jpg' in file :
+	if '.jpg' in file.lower() :
 		try :
 			fullfile = os.path.join(INPUTPATH, file)
 			newpath = os.path.join(OUTPUTPATH, getPhotoPath(fullfile))

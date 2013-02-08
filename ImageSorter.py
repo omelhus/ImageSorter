@@ -84,7 +84,7 @@ if not os.path.exists(INPUTPATH) :
 	exit(1)
 
 for file in os.listdir(INPUTPATH) :
-	if '.jpg' in file.lower() :
+	if file.lower().endswith('.jpg') :
 		try :
 			fullfile = os.path.join(INPUTPATH, file)
 			newpath = os.path.join(OUTPUTPATH, getPhotoPath(fullfile))
